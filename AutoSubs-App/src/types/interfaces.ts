@@ -52,12 +52,19 @@ export interface Sample {
     start: number;
     end: number;
 }
+export interface ColorModifier {
+    color: string;
+    enabled: boolean;
+}
 export interface Speaker {
     name: string;
     style: "Fill" | "Outline";
     color: string;
     sample: Sample;
     track?: string;
+    fill?: ColorModifier;
+    outline?: ColorModifier;
+    border?: ColorModifier;
 }
 
 // Model Interface
