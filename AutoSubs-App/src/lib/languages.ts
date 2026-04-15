@@ -35,7 +35,7 @@ export const languages = [
     { label: "Hausa", value: "ha" },
     { label: "Hawaiian", value: "haw" },
     { label: "Hebrew", value: "he" },
-    { label: "Hindi", value: "hi" },
+    { label: "Hindi (Roman / Hinglish)", value: "hi" },
     { label: "Hungarian", value: "hu" },
     { label: "Icelandic", value: "is" },
     { label: "Indonesian", value: "id" },

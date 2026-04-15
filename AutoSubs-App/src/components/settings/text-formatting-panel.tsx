@@ -38,6 +38,7 @@ export function TextFormattingPanel({
     const { settings, updateSetting } = useSettings()
     const [openCensorDialog, setOpenCensorDialog] = React.useState(false)
     const [newCensoredWord, setNewCensoredWord] = React.useState("")
+    const isSingleWordMode = settings.textDensity === "single"
 
     return (
         <div>
@@ -64,11 +65,34 @@ export function TextFormattingPanel({
                     </Select>
                 </div>
 
+                {/* One Word Mode */}
+                <div className="flex items-center justify-between">
+                    <div>
+                        <Label className="text-sm font-medium">One word at a time</Label>
+                        <p className="text-xs text-muted-foreground">Creates subtitles with one word per line for easier readability</p>
+                    </div>
+                    <Switch
+                        checked={isSingleWordMode}
+                        onCheckedChange={(checked: boolean) => {
+                            if (checked) {
+                                updateSetting("textDensity", "single")
+                                if (settings.maxLinesPerSubtitle !== 1) {
+                                    updateSetting("maxLinesPerSubtitle", 1)
+                                }
+                            } else {
+                                updateSetting("textDensity", "standard")
+                            }
+                        }}
+                    />
+                </div>
+
                 {/* Line Count */}
                 <div className="flex items-center justify-between">
                     <div>
                         <Label className="text-sm font-medium">{t("actionBar.format.lineCountTitle")}</Label>
-                        <p className="text-xs text-muted-foreground">{t("actionBar.format.lineCountDescription")}</p>
+                        <p className="text-xs text-muted-foreground">
+                            {isSingleWordMode ? "Fixed to 1 while one-word mode is enabled" : t("actionBar.format.lineCountDescription")}
+                        </p>
                     </div>
                     <Input
                         type="number"
@@ -76,6 +100,7 @@ export function TextFormattingPanel({
                         value={settings.maxLinesPerSubtitle}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSetting("maxLinesPerSubtitle", Number(e.target.value))}
                         className="w-20"
+                        disabled={isSingleWordMode}
                     />
                 </div>
 
